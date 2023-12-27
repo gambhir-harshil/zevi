@@ -4,13 +4,15 @@ interface SearchbarProps {
 
 const Searchbar: React.FC<SearchbarProps> = ({ handleIsOpen }) => {
   return (
-    <input
-      type="text"
-      placeholder="Search"
-      onFocus={() => handleIsOpen(true)}
-      onBlur={() => handleIsOpen(false)}
-      className="shadow-md px-8 py-4 text-2xl rounded-lg lg:w-[50%] w-[70%] h-[60px] outline-none mt-28"
-    />
+    <form action="submit" className="lg:w-[50%] w-[70%]">
+      <input
+        type="text"
+        placeholder="Search"
+        onFocus={() => handleIsOpen(true)}
+        onBlur={() => handleIsOpen(false)}
+        className="shadow-md lg:px-8 text-lg px-4 py-4 lg:text-2xl rounded-lg  w-full h-[60px] outline-none mt-28"
+      />
+    </form>
   );
 };
 
