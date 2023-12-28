@@ -1,8 +1,8 @@
 import { useState, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 interface SearchbarProps {
-  handleIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  productPage: any;
+  handleIsOpen?: React.Dispatch<React.SetStateAction<boolean>>;
+  productPage?: any;
 }
 
 const Searchbar: React.FC<SearchbarProps> = ({ handleIsOpen, productPage }) => {
