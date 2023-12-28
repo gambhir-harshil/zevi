@@ -7,7 +7,7 @@ const App = () => {
 
   return (
     <>
-      <Searchbar handleIsOpen={setIsOpen} home />
+      <Searchbar handleIsOpen={setIsOpen} />
       {isOpen && <Modal />}
     </>
   );
