@@ -1,6 +1,5 @@
 import { Rating } from "@mui/material";
 import { FakeProduct } from "../utils/createFakeProducts";
-import { Heart } from "lucide-react";
 import { useState } from "react";
 import { FavoriteBorder, Favorite } from "@mui/icons-material";
 
