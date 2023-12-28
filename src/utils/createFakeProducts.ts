@@ -3,21 +3,25 @@ import { faker } from "@faker-js/faker";
 export interface FakeProduct {
   id: string;
   name: string;
-  price: string;
+  price: number;
   material: string;
   department: string;
   imageUrl: string;
+  rating: number;
+  reviews: number;
 }
 
 const generateFakeProduct = (): FakeProduct => {
   return {
     id: faker.commerce.isbn(),
     name: faker.commerce.productName(),
-    price: faker.commerce.price(),
+    price: parseInt(faker.commerce.price(), 10),
     material: faker.commerce.productMaterial(),
     department: faker.commerce.department(),
+    rating: Math.floor(Math.random() * 5) + 1,
+    reviews: Math.floor(Math.random() * 300) + 1,
     imageUrl: faker.image.urlLoremFlickr({
-      category: "random",
+      category: "commerce",
       height: 360,
       width: 280,
     }),
