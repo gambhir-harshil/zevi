@@ -8,6 +8,7 @@ export interface FakeProduct {
   department: string;
   imageUrl: string;
   rating: number;
+  reviews: number;
 }
 
 const generateFakeProduct = (): FakeProduct => {
@@ -18,6 +19,7 @@ const generateFakeProduct = (): FakeProduct => {
     material: faker.commerce.productMaterial(),
     department: faker.commerce.department(),
     rating: Math.floor(Math.random() * 5) + 1,
+    reviews: Math.floor(Math.random() * 300) + 1,
     imageUrl: faker.image.urlLoremFlickr({
       category: "commerce",
       height: 360,

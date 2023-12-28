@@ -24,9 +24,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       </p>
       <p className="flex items-center">
         <Rating value={product.rating} readOnly />
-        <span className="text-gray-500">
-          ({Math.floor(Math.random() * 300) + 1})
-        </span>
+        <span className="text-gray-500">({product.reviews})</span>
       </p>
     </div>
   );
