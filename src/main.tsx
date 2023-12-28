@@ -4,16 +4,21 @@ import App from "./App.tsx";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ProductsPage from "./pages/Products.tsx";
+import Page404 from "./pages/Page404.tsx";
+import AppLayout from "./components/AppLayout.tsx";
 
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: <App />,
+    element: <AppLayout />,
+    children: [
+      {
+        path: "/",
+        element: <App />,
+      },
+    ],
   },
-  {
-    path: "/products",
-    element: <ProductsPage />,
-  },
+  { path: "/products", element: <ProductsPage /> },
+  { path: "*", element: <Page404 /> },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
