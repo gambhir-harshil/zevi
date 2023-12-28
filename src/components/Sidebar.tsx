@@ -4,15 +4,14 @@ import React, { useEffect, useState } from "react";
 import { Rating } from "@mui/material";
 
 interface SidebarProps {
-  products: [FakeProduct];
-  setFilteredData: React.Dispatch<React.SetStateAction<Array<FakeProduct>>>;
+  products: FakeProduct[];
+  setFilteredData: React.Dispatch<React.SetStateAction<FakeProduct[]>>;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ products, setFilteredData }) => {
   const [arrowUp, setArrowUp] = useState(false);
-  const [displayDepartments, setDisplayDepartments] = useState(
-    products.slice(0, 2)
-  );
+  const [displayDepartments, setDisplayDepartments] = useState<string[]>([]);
+  const [uniqueDepartments, setUniqueDepartments] = useState<string[]>([]);
 
   const [selectedFilters, setSelectedFilters] = useState({
     departments: new Set<string>(),
@@ -20,6 +19,14 @@ const Sidebar: React.FC<SidebarProps> = ({ products, setFilteredData }) => {
     maxPrice: Number.MAX_SAFE_INTEGER,
     ratings: new Set<number>(),
   });
+
+  useEffect(() => {
+    const uniqueDepartments = Array.from(
+      new Set(products.map((product) => product.department))
+    );
+    setUniqueDepartments(uniqueDepartments);
+    setDisplayDepartments(uniqueDepartments.slice(0, 3));
+  }, [products]);
 
   useEffect(() => {
     const filteredData = products.filter((product) => {
@@ -39,7 +46,7 @@ const Sidebar: React.FC<SidebarProps> = ({ products, setFilteredData }) => {
     });
 
     setFilteredData(filteredData);
-  }, [selectedFilters]);
+  }, [selectedFilters, products]);
 
   const handleDepartmentFilter = (department: string) => {
     setSelectedFilters((prevFilters) => {
@@ -72,38 +79,44 @@ const Sidebar: React.FC<SidebarProps> = ({ products, setFilteredData }) => {
   };
 
   function handleDisplayMore() {
-    setDisplayDepartments(products.slice(0, 6));
+    setDisplayDepartments(uniqueDepartments);
     setArrowUp(true);
   }
   function handleDisplayLess() {
-    setDisplayDepartments(products.slice(0, 2));
+    setDisplayDepartments(uniqueDepartments.slice(0, 3));
     setArrowUp(false);
   }
   return (
-    <div className="h-[calc(100vh-10rem)] w-[320px] px-8 py-4 overflow-y-scroll">
+    // Wrapper
+    <div className="h-[calc(100vh-10rem)] w-[320px] px-8 py-4 overflow-y-scroll hidden lg:block">
       <div className="flex flex-col gap-4 pb-4 mb-2 border-b border-gray-300">
+        {/* Department */}
         <div className="flex items-center justify-between w-full">
           <h3 className="font-semibold uppercase">Department</h3>
           {arrowUp ? (
-            <ChevronUp onClick={handleDisplayLess} />
+            <ChevronUp className="cursor-pointer" onClick={handleDisplayLess} />
           ) : (
-            <ChevronDown onClick={handleDisplayMore} />
+            <ChevronDown
+              className="cursor-pointer"
+              onClick={handleDisplayMore}
+            />
           )}
         </div>
         {displayDepartments.map((item) => (
-          <div key={item.id} className="flex items-center gap-4">
+          <div key={item} className="flex items-center gap-4">
             <input
               type="checkbox"
-              checked={selectedFilters.departments.has(item.department)}
-              value={item.department}
-              onChange={() => handleDepartmentFilter(item.department)}
+              checked={selectedFilters.departments.has(item)}
+              value={item}
+              onChange={() => handleDepartmentFilter(item)}
               className="w-4 h-4 border-none shadow-md outline-none"
             />
-            <span className="font-medium tracking-wide">{item.department}</span>
+            <span className="font-medium tracking-wide">{item}</span>
           </div>
         ))}
       </div>
 
+      {/* Price Ranges */}
       <div className="flex flex-col gap-4 pb-4 mb-2 border-b border-gray-300">
         <h3 className="font-semibold uppercase">Price Range</h3>
         <div className="flex items-center gap-4">
@@ -144,10 +157,10 @@ const Sidebar: React.FC<SidebarProps> = ({ products, setFilteredData }) => {
           <span className="font-medium tracking-wide">700-900</span>
         </div>
       </div>
-      {/* Ratings */}
 
+      {/* Ratings */}
       <div className="flex flex-col gap-4 pb-4 border-b border-gray-300">
-        <h3 className="font-semibold uppercase">Ratings</h3>
+        <h3 className="font-semibold uppercase">Rating</h3>
         {[5, 4, 3, 2, 1].map((rating) => (
           <div key={rating} className="flex items-center gap-4">
             <input

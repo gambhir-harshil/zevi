@@ -11,6 +11,7 @@ const Searchbar: React.FC<SearchbarProps> = ({ handleIsOpen, productPage }) => {
   const [input, setInput] = useState("");
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setInput("");
     navigate("/products", { state: input });
   }
 
@@ -18,7 +19,7 @@ const Searchbar: React.FC<SearchbarProps> = ({ handleIsOpen, productPage }) => {
     <form
       action="submit"
       onSubmit={handleSubmit}
-      className={`lg:w-[50%] w-[70%] mt-28 ${productPage && "mt-4"}`}
+      className={`lg:w-[50%] w-[70%] mt-28 ${productPage && "mt-6"}`}
     >
       <input
         type="text"
